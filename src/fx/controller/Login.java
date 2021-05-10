@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,25 +31,17 @@ public class Login implements Initializable {
 	private Stage pop;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Platform.runLater(()->txtId.requestFocus());//txtId에 포커스 주기 실행후에 로드가다되면 실행하라는 뜻 
+		txtId.setOnKeyPressed(e->escKeyEvent(e));
 		btnCancel.setOnAction(e->btnCancelAction(e));
 		btnLogin.setOnAction(e->btnLoginAction(e));
 		btnRegister.setOnAction(e->btnRegisteerAction(e));
-		txtPw.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-				if(event.getCode().getKeyCode(event)=="") {
-					btnLogin.setOnAction(e->btnLoginAction(e));
-				}
-			}
-		
-		});
-		//if(btnLogin.setOnKeyPressed==event.get)
-		//Stage stage = (Stage)btnLogin.getScene().getWindow();
-		//stage.setResizable(false);
+		txtPw.setOnKeyPressed(e->enterKeyEvent(e));
+	
+	
 	}
 
-	public void btnLoginAction(ActionEvent e) {
+	public void loginAction() {
 		User user = new User();
 		user.setUserId(txtId.getText().toString());
 		user.setUserPw(txtPw.getText().toString());
@@ -95,6 +88,23 @@ public class Login implements Initializable {
 		            e2.printStackTrace();
 		        }
 		}
+
+	}
+	
+	public void enterKeyEvent(KeyEvent e) {
+		KeyCode key = e.getCode();
+		if(key.equals(KeyCode.ENTER)) {
+			loginAction();
+		}
+	}
+	public void escKeyEvent(KeyEvent e) {
+		KeyCode key = e.getCode();
+		if(key.equals(KeyCode.ESCAPE)) {
+			Platform.exit();
+		}
+	}
+	public void btnLoginAction(ActionEvent e) {
+		loginAction();
 
 	}
 	public void btnRegisteerAction(ActionEvent e) {
