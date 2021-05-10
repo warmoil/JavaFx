@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="404.0" layoutY="80.0" text="사기꾼 조회">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="611.0" layoutY="128.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="137.0" text="검색 " />
+            <TextField layoutX="203.0" layoutY="128.0" prefHeight="40.0" prefWidth="368.0" />
+            <Button layoutX="77.0" layoutY="44.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="253.0" text="메인가기위한 버튼">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="670.0" layoutY="47.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="158.0" text="로그인" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="346.0" layoutY="48.0" text="()의 대한 사기 피해   내용">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="331.0" layoutY="108.0" text="()건 있습니다 .">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="316.0" layoutY="235.0" prefHeight="21.0" prefWidth="150.0" text="피해 등록하기">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="498.0" layoutY="218.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="112.0" text="등록" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
