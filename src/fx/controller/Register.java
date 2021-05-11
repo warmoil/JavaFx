@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import db.User;
 import db.UserDAO;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -46,12 +47,29 @@ public class Register implements Initializable {
 		btnIdCheck.setOnAction(e->idCheckEvent());
 		pwCheckAction(txtPw, lblPw);
 		comparePw(txtPw , txtPwCheck , lblPwCheck);
-	
+		btnJoin.setOnAction(e->joinAction());
 	}
 	
 	public void joinAction() {
-		if(!userDao.isJoined(txtId.getText().toString())){
-			
+		if(!userDao.isJoined(txtId.getText().toString()) && txtPw.getText().toString().length() >=4 &&txtPw.getText().toString().equals(txtPwCheck.getText().toString())){
+			if(txtAsk.getText().toString().length()>0 && txtNickName.getText().toString().length()>0 &&txtAnswer.getText().toString().length()>0) {
+				User user = new User();
+				user.setUserId(txtId.getText().toString());
+				user.setUserPw(txtPw.getText().toString());
+				user.setUserAnswer(txtAnswer.getText().toString());
+				user.setUserAsk(txtAsk.getText().toString());
+				user.setUserNickName(txtNickName.getText().toString());
+				int result = userDao.join(user);
+				if(result == 1) {
+					joinSuccessAlert();
+				}else {
+					joinFailAlert();
+				}
+			}else {
+				joinFailAlert();
+			}		
+		}else {
+			joinFailAlert();
 		}
 	}
 	
@@ -136,10 +154,35 @@ public class Register implements Initializable {
 		
 		}
 	}
+	public void joinSuccessAlert() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("회원가입 성공했습니다 ");
+		alert.setHeaderText("로그인 창 보내드림");
+	
+	
+		Optional<ButtonType> result = alert.showAndWait();
+		
+	
+		if(result.get() == ButtonType.OK) {
+			goLogin();
+		}
+	}
+	public void joinFailAlert() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("회원가입 실패 ");
+		alert.setHeaderText("실패함 ㅋ");
+	
+	
+		alert.showAndWait();
+		
+	
+		
+	}
 	public void alertShow() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("경고!");
-		alert.setContentText("님 회원 가입 안함?");
+		alert.setHeaderText("회원 가입 안하나요?");
+		alert.setContentText("님 회원 가입 안함? 진짜 안함?");
 	
 		Optional<ButtonType> result = alert.showAndWait();
 		

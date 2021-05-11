@@ -15,7 +15,7 @@ public class UserDAO {
 	
 	public UserDAO() {
 		try {
-			String dbURL = "jdbc:mariadb://localhost:3307/theCheat";
+			String dbURL = "jdbc:mariadb://localhost:3306/theCheat";
 			String dbID = "root";
 			String dbPassword = "1234";
 			Class.forName("org.mariadb.jdbc.Driver");

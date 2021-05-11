@@ -2,13 +2,11 @@ package fx.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import db.User;
 import db.UserDAO;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,21 +14,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class Login implements Initializable {
-	@FXML AnchorPane loginPane;
+
 	@FXML Button btnLogin,btnRegister,btnCancel;
 	@FXML TextField txtId;
 	@FXML PasswordField txtPw;
@@ -38,7 +32,7 @@ public class Login implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(()->txtId.requestFocus());//txtId에 포커스 주기 실행후에 로드가다되면 실행하라는 뜻 
-		loginPane.setOnKeyPressed(e->escKeyEvent(e)); 
+		txtId.setOnKeyPressed(e->escKeyEvent(e));
 		btnCancel.setOnAction(e->btnCancelAction(e));
 		btnLogin.setOnAction(e->btnLoginAction(e));
 		btnRegister.setOnAction(e->btnRegisteerAction(e));
@@ -58,7 +52,11 @@ public class Login implements Initializable {
 		System.out.println("아이디:"+id+"\n pw:"+pw);
 		if(isLog == 1) {
 			try {
-				Parent main = FXMLLoader.load(getClass().getResource("../fxml/Main.fxml"));				
+				 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+				 Parent main =loader.load();
+					
+				Main mainCon = loader.getController();
+				mainCon.sendUserId(user);
 				Scene mainScene = new Scene(main);
 				Stage stage = (Stage)btnLogin.getScene().getWindow();
 				stage.setScene(mainScene);
@@ -97,21 +95,6 @@ public class Login implements Initializable {
 
 	}
 	
-	public void alertShow() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("경고!");
-		alert.setContentText("프로그램을 종료 할까요??");
-	
-		Optional<ButtonType> result = alert.showAndWait();
-		
-	
-		if(result.get() == ButtonType.OK) {
-			Platform.exit();
-		}else if(result.get() == ButtonType.NO){
-			alert.close();
-		}
-	}
-	
 	public void enterKeyEvent(KeyEvent e) {
 		KeyCode key = e.getCode();
 		if(key.equals(KeyCode.ENTER)) {
@@ -121,7 +104,7 @@ public class Login implements Initializable {
 	public void escKeyEvent(KeyEvent e) {
 		KeyCode key = e.getCode();
 		if(key.equals(KeyCode.ESCAPE)) {
-			alertShow();
+			Platform.exit();
 		}
 	}
 	public void btnLoginAction(ActionEvent e) {

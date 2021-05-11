@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane fx:id="mainPane" prefHeight="700.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="fx.controller.Main">
+<BorderPane fx:id="mainPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controller.Main">
    <top>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -19,8 +18,10 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnLogin" layoutX="778.0" layoutY="39.0" mnemonicParsing="false" text="이건 로그인" />
+            <Button fx:id="btnGoLogin" layoutX="778.0" layoutY="39.0" mnemonicParsing="false" text="이건 로그인" />
             <Button fx:id="btnGoMain" layoutX="112.0" layoutY="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="163.0" text="메인홈가기위한 아이콘" />
+            <Label fx:id="lblUserId" layoutX="718.0" layoutY="43.0" text="너의 아이디" />
+            <Label fx:id="lblChk" layoutX="586.0" layoutY="29.0" text="확인용" />
          </children>
       </AnchorPane>
    </top>
