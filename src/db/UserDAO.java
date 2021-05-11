@@ -15,7 +15,7 @@ public class UserDAO {
 	
 	public UserDAO() {
 		try {
-			String dbURL = "jdbc:mariadb://localhost:3306/theCheat";
+			String dbURL = "jdbc:mariadb://localhost:3307/theCheat";
 			String dbID = "root";
 			String dbPassword = "1234";
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -58,4 +58,24 @@ public class UserDAO {
 		  }
 		  return -1;
 		}
+	
+	public boolean isJoined(String  userId) {
+		String sql = "select userId from user where userId = ?";
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, userId); 
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {
+				if(rs.getString(1).equals(userId)) {
+					return true; 
+				}else
+					return false; 
+			}
+			return false; 
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 }
