@@ -26,6 +26,6 @@
       </AnchorPane>
    </top>
    <bottom>
-      <TextField alignment="CENTER" promptText="copy left" BorderPane.alignment="CENTER" />
+      <TextField alignment="CENTER" promptText="copy left" BorderPane.alignment="CENTER" disable="true"/>
    </bottom>
 </BorderPane>

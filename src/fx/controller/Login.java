@@ -2,6 +2,7 @@ package fx.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import db.User;
@@ -14,11 +15,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -28,11 +33,12 @@ public class Login implements Initializable {
 	@FXML Button btnLogin,btnRegister,btnCancel;
 	@FXML TextField txtId;
 	@FXML PasswordField txtPw;
+	@FXML AnchorPane loginPane;
 	private Stage pop;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(()->txtId.requestFocus());//txtId에 포커스 주기 실행후에 로드가다되면 실행하라는 뜻 
-		txtId.setOnKeyPressed(e->escKeyEvent(e));
+		loginPane.setOnKeyPressed(e->escKeyEvent(e));
 		btnCancel.setOnAction(e->btnCancelAction(e));
 		btnLogin.setOnAction(e->btnLoginAction(e));
 		btnRegister.setOnAction(e->btnRegisteerAction(e));
@@ -56,7 +62,8 @@ public class Login implements Initializable {
 				 Parent main =loader.load();
 					
 				Main mainCon = loader.getController();
-				mainCon.sendUserId(user);
+				
+				mainCon.setUser(user);
 				Scene mainScene = new Scene(main);
 				Stage stage = (Stage)btnLogin.getScene().getWindow();
 				stage.setScene(mainScene);
@@ -104,7 +111,23 @@ public class Login implements Initializable {
 	public void escKeyEvent(KeyEvent e) {
 		KeyCode key = e.getCode();
 		if(key.equals(KeyCode.ESCAPE)) {
+			
+			escAlertShow();
+		}
+	}
+	public void escAlertShow() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("간다고?");
+		alert.setHeaderText("진짜?");
+		alert.setContentText("님 나갈꺼?? 종료??");
+	
+		Optional<ButtonType> result = alert.showAndWait();
+		
+	
+		if(result.get() == ButtonType.OK) {
 			Platform.exit();
+		}else if(result.get() == ButtonType.NO){
+			alert.close();
 		}
 	}
 	public void btnLoginAction(ActionEvent e) {
@@ -134,8 +157,8 @@ public class Login implements Initializable {
 	  Parent root = (Parent) loader.load();
 	  Scene scene = new Scene(root);
 	  
-	  LoginFail pop = loader.getController();
-	  pop.failReason(reason);
+	  LoginFail popCon = loader.getController();
+	  popCon.failReason(reason);
 	  
 	  Stage stage = new Stage();
 	  stage.setScene(scene);

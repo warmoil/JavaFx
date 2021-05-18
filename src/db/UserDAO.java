@@ -58,6 +58,45 @@ public class UserDAO {
 		  }
 		  return -1;
 		}
+	public String getUserNickName(String userId) {
+		String sql = "select nickname from user where userId = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, userId); 
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {		
+				String nick = rs.getString("nickname");				
+					return nick;
+				}
+			System.out.println("틀림");
+			return null;
+		}catch(Exception e) {
+			System.out.println("실패");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public String getUserNickName(User user) {
+		String sql = "select nickname from user where userId = ?";
+		System.out.println("겟닉네임 메소드 실행");
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, user.getUserId()); 
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {		
+				String nick = rs.getString("nickname");				
+					return nick;
+				}
+			System.out.println("틀림");
+			return null;
+		}catch(Exception e) {
+			System.out.println("실패");
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public boolean isJoined(String  userId) {
 		String sql = "select userId from user where userId = ?";

@@ -1,10 +1,13 @@
 package fx.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import alert.ESCAlert;
 import db.User;
+import db.UserDAO;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -27,18 +32,55 @@ public class Main implements Initializable {
 	@FXML private BorderPane mainPane;
 	@FXML private Label lblUserId,lblChk;
 	private User user;
-
+	private UserDAO dao = new UserDAO();
+	private String userId;
+	String nickName;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		Platform.runLater(()->txtfieldSearch.focusedProperty());
 		btnGoLogin.setOnAction(e->goLoginAlert());
-		Platform.runLater(()->lblUserId.setText(user.getUserId()));
-		Platform.runLater(()->lblChk.setText(user.getUserId()+"chk"));
+		Platform.runLater(()->lblUserId.setText(userId));
+		Platform.runLater(()->lblChk.setText("너의 닉:"+nickName));
+		mainPane.setOnKeyPressed(e->escKeyEvent(e));
+		btnSearch.setOnAction(e->searchingAction());
 	}
 
-	public void sendUserId(User user) {
+	public void setUser(String userId) {
+		nickName = dao.getUserNickName(userId);
+		this.userId = userId;
+	}
+	
+	public void setUser(User user) {
+		nickName = dao.getUserNickName(user);
+		this.userId = user.getUserId();
 		this.user  = user;
 	}
+	public void escKeyEvent(KeyEvent e) {
+		KeyCode key = e.getCode();
+		if(key.equals(KeyCode.ESCAPE)) {
+			ESCAlert al = new ESCAlert();
+			al.escAlertShow();
+		}
+	}
+	
+	public void searchingAction() {
+		try {
+			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Search.fxml"));
+			 Parent center =loader.load();
+			
+			Search searchCon = loader.getController();
+			searchCon.setUserId(lblUserId.getText().toString());
+			System.out.println(lblUserId.getText().toString());
+			searchCon.doSearching(txtfieldSearch.getText().toString(),lblUserId.getText().toString());
+		
+			mainPane.setCenter(center);
+			
+		} catch(IOException e2) {
+			e2.printStackTrace();
+			System.out.println("시발");
+		}
+	}
+	
 	public void goLoginAlert() {
 		Alert alert =  new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("로그인창으로?");
