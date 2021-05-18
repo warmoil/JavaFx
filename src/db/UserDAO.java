@@ -12,7 +12,7 @@ public class UserDAO {
 	private Connection conn; 
 	private PreparedStatement pstmt; 
 	private ResultSet rs; 
-	
+	private User user = new User();
 	public UserDAO() {
 		try {
 			String dbURL = "jdbc:mariadb://localhost:3306/theCheat";
@@ -78,6 +78,34 @@ public class UserDAO {
 		}
 	}
 
+	public User getUserInfo(String userId) {
+		String sql = "select * from user where userId = ?";
+		User user = new User();
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, userId); 
+			rs = pstmt.executeQuery(); 
+			if(rs.next()) {		
+				System.out.println("rs.next()는 됐음");
+				String nick = rs.getString("nickname");				
+				String id = rs.getString("userId");
+				String pw = rs.getString("userPw");
+				String ask = rs.getString("ask");
+				String answer = rs.getString("answer");
+				user.setUserInfo(id, pw, nick, ask, answer);
+				return user;
+				}
+			System.out.println("getUserInfo실패");
+			
+		}catch(Exception e) {
+			System.out.println("실패");
+			e.printStackTrace();
+			
+		}
+		return null;
+		
+	}
+	
 	public String getUserNickName(User user) {
 		String sql = "select nickname from user where userId = ?";
 		System.out.println("겟닉네임 메소드 실행");

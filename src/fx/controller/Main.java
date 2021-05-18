@@ -43,17 +43,25 @@ public class Main implements Initializable {
 		Platform.runLater(()->lblChk.setText("너의 닉:"+nickName));
 		mainPane.setOnKeyPressed(e->escKeyEvent(e));
 		btnSearch.setOnAction(e->searchingAction());
+		Platform.runLater(()->test(userId));
 	}
 
+	public void test(String userId) {
+		System.out.println(userId);
+		user = dao.getUserInfo(userId);
+		System.out.println(user.getUserAsk()+"\n"+user.getUserAnswer());
+	}
 	public void setUser(String userId) {
 		nickName = dao.getUserNickName(userId);
 		this.userId = userId;
 	}
 	
 	public void setUser(User user) {
+		
 		nickName = dao.getUserNickName(user);
 		this.userId = user.getUserId();
 		this.user  = user;
+		
 	}
 	public void escKeyEvent(KeyEvent e) {
 		KeyCode key = e.getCode();

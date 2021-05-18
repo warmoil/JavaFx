@@ -4,6 +4,14 @@ public class User {
 
 	private String userId,userPw,userNickName,userAsk,userAnswer;
 
+	public void setUserInfo(String userId,String userPw,String userNickName,String userAsk,String userAnswer) {
+		setUserId(userId);
+		setUserPw(userPw);
+		setUserAsk(userAsk);
+		setUserAnswer(userAnswer);
+		setUserNickName(userNickName);
+	}
+	
 	public String getUserId() {
 		return userId;
 	}
