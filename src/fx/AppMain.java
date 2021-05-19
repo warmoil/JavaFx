@@ -13,7 +13,7 @@ public class AppMain extends Application {
 		Parent root = loader.load();
 		
 		Scene scene = new Scene(root);
-		stage.setTitle("로그인");
+		stage.setTitle("The Cheat ");
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import alert.ESCAlert;
 import db.CriminalDAO;
 import db.User;
 import db.UserDAO;
@@ -15,6 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -58,7 +61,12 @@ public class Search implements Initializable {
 			System.out.println("시발");
 		}
 	}
-	
+	public void enterKeyEvent(KeyEvent e) {
+		KeyCode key = e.getCode();
+		if(key.equals(KeyCode.ENTER)) {
+			
+		}
+		}
 	public void doSearching(String crimId,String userId) {
 		 setUserId(userId);
 		 this.crimId = crimId;

@@ -37,6 +37,8 @@ public class Main implements Initializable {
 	String nickName;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		txtfieldSearch.setOnKeyPressed(e->enterKeyEvent(e));
 		Platform.runLater(()->txtfieldSearch.focusedProperty());
 		btnGoLogin.setOnAction(e->goLoginAlert());
 		Platform.runLater(()->lblUserId.setText(userId));
@@ -70,7 +72,12 @@ public class Main implements Initializable {
 			al.escAlertShow();
 		}
 	}
-	
+	public void enterKeyEvent(KeyEvent e) {
+		KeyCode key = e.getCode();
+		if(key.equals(KeyCode.ENTER)) {
+			searchingAction();
+		}
+	}
 	public void searchingAction() {
 		try {
 			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Search.fxml"));
