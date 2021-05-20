@@ -61,15 +61,11 @@ public class Search implements Initializable {
 			System.out.println("시발");
 		}
 	}
-	public void enterKeyEvent(KeyEvent e) {
-		KeyCode key = e.getCode();
-		if(key.equals(KeyCode.ENTER)) {
-			
-		}
-		}
+	
 	public void doSearching(String crimId,String userId) {
 		 setUserId(userId);
 		 this.crimId = crimId;
+		 cDao.setCrimNum(crimId);
 		 if(cDao.getCrimNum(crimId) == -1) {
 			 cNum = "0";
 		 }else {

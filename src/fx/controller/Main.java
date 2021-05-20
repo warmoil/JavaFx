@@ -79,6 +79,7 @@ public class Main implements Initializable {
 		}
 	}
 	public void searchingAction() {
+		if(txtfieldSearch.getText().toString().length()>0) {
 		try {
 			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Search.fxml"));
 			 Parent center =loader.load();
@@ -94,6 +95,7 @@ public class Main implements Initializable {
 			e2.printStackTrace();
 			System.out.println("시발");
 		}
+	}
 	}
 	
 	public void goLoginAlert() {

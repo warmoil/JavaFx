@@ -9,7 +9,7 @@ public class CriminalDAO {
 
 	private Connection conn; 
 	private PreparedStatement pstmt; 
-	private ResultSet rs; 
+	private ResultSet rs,rs2; 
 	
 	
 	public CriminalDAO() {
@@ -41,5 +41,31 @@ public class CriminalDAO {
 		return -1;
 	}
 	
+	public void setCrimNum(String crimId) {
+		String sql = "select cId from report where cId =?";
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, crimId); 
+			rs = pstmt.executeQuery(); 
+			
+			rs.last();
+			int rowCount = rs.getRow();
+			System.out.println(rowCount+"로우count");
+				
+					sql = "update criminal set cNum =? where cId =?";
+					try {
+						pstmt = conn.prepareStatement(sql); 
+						pstmt.setInt(1, rowCount);
+						pstmt.setString(2, crimId);
+						int count = pstmt.executeUpdate(); 
+						System.out.println(count+":카운트");
+					}catch(Exception e2) {
+						e2.printStackTrace();
+					}	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

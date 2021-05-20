@@ -9,7 +9,7 @@
 
 <BorderPane fx:id="mainPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controller.Main">
    <top>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="148.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="txtfieldSearch" layoutX="277.0" layoutY="100.0" prefHeight="39.0" prefWidth="381.0" />
             <Button fx:id="btnSearch" layoutX="700.0" layoutY="100.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="66.0" text="검색" />
@@ -26,6 +26,6 @@
       </AnchorPane>
    </top>
    <bottom>
-      <TextField alignment="CENTER" promptText="copy left" BorderPane.alignment="CENTER" disable="true"/>
+      <TextField alignment="CENTER" disable="true" promptText="copy left" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

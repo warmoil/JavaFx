@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import db.ReportDAO;
 import db.User;
 import db.UserDAO;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ public class Enroll implements Initializable {
 	@FXML private TextArea txtContent;
 	@FXML private Button btnEnter,btnCancel;
 	private UserDAO dao = new UserDAO();
+	private ReportDAO rDao = new ReportDAO();
 	private User user;
 	private String userId;
 	@Override
@@ -42,12 +44,22 @@ public class Enroll implements Initializable {
 		this.userId = userId;
 	}
 	
+	public void doReporting() {
+		String cId = txtCId.getText().toString();
+		String reason = txtContent.getText().toString();
+		String title = txtTitle.getText().toString();
+		rDao.doReporting(cId, userId, reason, title);
+	}
+	
 	public void enterAction(){
 		String id = txtCId.getText().toString();
 		String content = txtContent.getText().toString();
 		String title = txtTitle.getText().toString();
 		if(id.length()>0 && content.length() > 0 && title.length() > 0) {
+			int reported = rDao.doReporting(id, userId, content, title);
+			if(reported != -1) {
 			successAlert();
+			}
 		}else {
 		failAlertShow();
 		}
