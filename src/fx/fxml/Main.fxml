@@ -18,10 +18,11 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnGoLogin" layoutX="778.0" layoutY="39.0" mnemonicParsing="false" text="이건 로그인" />
+            <Button fx:id="btnGoLogin" layoutX="778.0" layoutY="39.0" mnemonicParsing="false" text="로그 아웃" />
             <Button fx:id="btnGoMain" layoutX="112.0" layoutY="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="163.0" text="메인홈가기위한 아이콘" />
-            <Label fx:id="lblUserId" layoutX="718.0" layoutY="43.0" text="너의 아이디" />
-            <Label fx:id="lblChk" layoutX="586.0" layoutY="29.0" text="확인용" />
+            <Label fx:id="lblUserId" layoutX="594.0" layoutY="32.0" text="신고횟수" />
+            <Label fx:id="lblChk" layoutX="500.0" layoutY="32.0" text="확인용" />
+            <Label fx:id="lblReportCnt" layoutX="666.0" layoutY="32.0" text="신고 횟수" />
          </children>
       </AnchorPane>
    </top>

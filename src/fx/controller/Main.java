@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import alert.ESCAlert;
+import db.ReportDAO;
 import db.User;
 import db.UserDAO;
 import javafx.application.Platform;
@@ -30,32 +31,38 @@ public class Main implements Initializable {
 	@FXML private TextField txtfieldSearch;
 	@FXML private Button btnSearch,btnGoLogin,btnGoMain;
 	@FXML private BorderPane mainPane;
-	@FXML private Label lblUserId,lblChk;
+	@FXML private Label lblUserId,lblChk,lblReportCnt;
 	private User user;
 	private UserDAO dao = new UserDAO();
+	private ReportDAO rDao = new ReportDAO();
 	private String userId;
+	
 	String nickName;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
 		txtfieldSearch.setOnKeyPressed(e->enterKeyEvent(e));
 		Platform.runLater(()->txtfieldSearch.focusedProperty());
 		btnGoLogin.setOnAction(e->goLoginAlert());
-		Platform.runLater(()->lblUserId.setText(userId));
-		Platform.runLater(()->lblChk.setText("너의 닉:"+nickName));
+		Platform.runLater(()->lblReportCnt.setText(Integer.toString(rDao.getReportingNum(userId))));
+		//Platform.runLater(()->lblUserId.setText(userId));
+		Platform.runLater(()->lblChk.setText(nickName));
 		mainPane.setOnKeyPressed(e->escKeyEvent(e));
 		btnSearch.setOnAction(e->searchingAction());
 		Platform.runLater(()->test(userId));
 	}
+
+	
 
 	public void test(String userId) {
 		System.out.println(userId);
 		user = dao.getUserInfo(userId);
 		System.out.println(user.getUserAsk()+"\n"+user.getUserAnswer());
 	}
+	
 	public void setUser(String userId) {
 		nickName = dao.getUserNickName(userId);
 		this.userId = userId;
+		this.user = dao.getUserInfo(userId);
 	}
 	
 	public void setUser(User user) {
@@ -85,9 +92,9 @@ public class Main implements Initializable {
 			 Parent center =loader.load();
 			
 			Search searchCon = loader.getController();
-			searchCon.setUserId(lblUserId.getText().toString());
-			System.out.println(lblUserId.getText().toString());
-			searchCon.doSearching(txtfieldSearch.getText().toString(),lblUserId.getText().toString());
+			searchCon.setUserId(userId);
+			System.out.println(userId);
+			searchCon.doSearching(txtfieldSearch.getText().toString(),userId);
 		
 			mainPane.setCenter(center);
 			
