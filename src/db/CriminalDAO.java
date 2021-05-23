@@ -40,7 +40,19 @@ public class CriminalDAO {
 		}
 		return -1;
 	}
-	
+	public void insertCriminal(String crimId) {
+		String sql = "insert into  criminal  values(?, 1)";
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, crimId); 
+			int insertNum = pstmt.executeUpdate(); 
+			if(insertNum >0) {
+				System.out.println("criminal에 "+crimId+":입력 성공");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public void setCrimNum(String crimId) {
 		String sql = "select cId from report where cId =?";
 		try {

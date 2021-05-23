@@ -24,7 +24,66 @@ public class ReportDAO {
 			e.printStackTrace();
 		}
 	}
-	
+	public String getContent(int index) {
+		String sql = "select content from report where  num = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, index);
+			rs = pstmt.executeQuery();
+			String content = rs.getString("content");
+			return content;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Report[] getReportTitle(String crimId) {
+		String sql = "select title,num from report where cId = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, crimId);
+			rs = pstmt.executeQuery();
+			rs.last();
+			int getRowNum = rs.getRow();
+			if(getRowNum>0) {
+				rs.beforeFirst();
+			Report[] titles = new Report[getRowNum];
+			System.out.println(getRowNum);
+			int i =0;
+			Report report;
+			while(rs.next()) {
+				report = new Report();
+				report.setReport(rs.getString("title"), rs.getInt("num"));
+				titles[i] = report;
+				i++;
+			}
+			return titles;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	public int getReportedNum(String cId) {
+		String sql = "select title from report where cId = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,cId);
+			rs = pstmt.executeQuery();
+			rs.last();
+			int reportedNum = rs.getRow();
+			return reportedNum;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	//위아래는 완전히 같은 코드지만 위에는 신고당한 횟수 아래는 신고한 횟수임 
+	//
 	public int getReportingNum(String userId) {
 		
 		String sql = "select title from report where reporter = ?";
@@ -43,7 +102,7 @@ public class ReportDAO {
 	}
 	
 	public int doReporting(String crimId, String reporterId , String reason , String title) {
-		String sql =  "insert into report values(?, ?, ?, ?)";
+		String sql =  "insert into report values(?, ?, ?, ?,?)";
 		try {
 			pstmt = conn.prepareStatement(sql); 
 			System.out.println(crimId+"\n"+reporterId+"\n"+reason+"\n"+title);		
@@ -51,6 +110,7 @@ public class ReportDAO {
 			pstmt.setString(2, reporterId); 
 			pstmt.setString(3, reason); 
 			pstmt.setString(4, title); 
+			pstmt.setString(5, null);
 			pstmt.executeUpdate();
 			int reported = isreported(crimId);
 			if(reported == -1) {
@@ -79,6 +139,7 @@ public class ReportDAO {
 		}
 		return -1;
 	}
+	//이건 잘못 만든 코드 crim쪽으로 옮겨야함 
 	public int isreported(String  cId) {
 		String sql = "select cId from  criminal where cId = ?";
 		try {
