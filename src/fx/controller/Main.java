@@ -9,7 +9,10 @@ import alert.ESCAlert;
 import db.ReportDAO;
 import db.User;
 import db.UserDAO;
+import fx.StageStore;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,9 +24,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main implements Initializable {
@@ -36,6 +42,7 @@ public class Main implements Initializable {
 	private UserDAO dao = new UserDAO();
 	private ReportDAO rDao = new ReportDAO();
 	private String userId;
+
 	
 	String nickName;
 	@Override
@@ -43,15 +50,36 @@ public class Main implements Initializable {
 		txtfieldSearch.setOnKeyPressed(e->enterKeyEvent(e));
 		Platform.runLater(()->txtfieldSearch.focusedProperty());
 		btnGoLogin.setOnAction(e->goLoginAlert());
-		Platform.runLater(()->lblReportCnt.setText(Integer.toString(rDao.getReportingNum(userId))));
+		
+		Platform.runLater(()->setReportingNumHyperLink(userId));
 		//Platform.runLater(()->lblUserId.setText(userId));
 		Platform.runLater(()->lblChk.setText(nickName));
 		mainPane.setOnKeyPressed(e->escKeyEvent(e));
 		btnSearch.setOnAction(e->searchingAction());
 		Platform.runLater(()->test(userId));
 	}
-
 	
+	public void setReportingNumHyperLink(String userId) {
+		int num = rDao.getReportingNum(userId);
+		System.out.println("num은"+num);
+		if(num >0) {
+			Hyperlink link = new Hyperlink("hello");
+			link.setLayoutX(10);
+			link.setLayoutY(10);
+			lblReportCnt.setText("");
+			link.setText(Integer.toString(num)+"회");
+			link.setTextFill(Color.RED);
+			link.setLayoutX(lblReportCnt.getLayoutX());
+			link.setLayoutY(lblReportCnt.getLayoutY()-3);
+		
+			AnchorPane an = (AnchorPane) mainPane.getTop();
+			an.getChildren().add(link);
+			
+		}else {
+			lblReportCnt.setText(Integer.toString(num));
+		}
+		
+	}
 
 	public void test(String userId) {
 		System.out.println(userId);
@@ -63,6 +91,7 @@ public class Main implements Initializable {
 		nickName = dao.getUserNickName(userId);
 		this.userId = userId;
 		this.user = dao.getUserInfo(userId);
+		setReportingNumHyperLink(userId);
 	}
 	
 	public void setUser(User user) {
@@ -70,6 +99,7 @@ public class Main implements Initializable {
 		nickName = dao.getUserNickName(user);
 		this.userId = user.getUserId();
 		this.user  = user;
+		setReportingNumHyperLink(userId);
 		
 	}
 	public void escKeyEvent(KeyEvent e) {

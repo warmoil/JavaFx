@@ -37,7 +37,30 @@ public class ReportDAO {
 		}
 		return null;
 	}
-
+	public MyReportData[] getMyReportInfo(String userId) {
+		String sql = "select * from report where reporter = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			rs.last();
+			int getRowNum = rs.getRow();
+			if(getRowNum>0) {
+				rs.beforeFirst();
+				MyReportData[] datas = new MyReportData[getRowNum];
+				int i=0;
+				while(rs.next()) {
+					datas[i] = new MyReportData(rs.getString("cId"), rs.getString("title"), rs.getInt("num"),false);
+					i++;
+				}
+				return datas;
+			}
+		}catch(Exception e) {
+			System.out.println("getReporterInfo실패");
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public Report[] getReportTitle(String crimId) {
 		String sql = "select title,num from report where cId = ?";
 		try {

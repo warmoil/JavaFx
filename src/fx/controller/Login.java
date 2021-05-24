@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import db.User;
 import db.UserDAO;
+import fx.StageStore;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,12 +20,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -44,10 +47,19 @@ public class Login implements Initializable {
 		btnLogin.setOnAction(e->btnLoginAction(e));
 		btnRegister.setOnAction(e->btnRegisteerAction(e));
 		txtPw.setOnKeyPressed(e->enterKeyEvent(e));
-	
+		Platform.runLater(()->test());
+		
+		
 	
 	}
-
+	public void test() {
+		Hyperlink link = new Hyperlink("plz");
+		link.setLayoutX(10);
+		link.setLayoutY(10);
+		loginPane.getChildren().add(link);
+	}
+	
+	
 	public void loginAction() {
 		User user = new User();
 		user.setUserId(txtId.getText().toString());
@@ -66,7 +78,9 @@ public class Login implements Initializable {
 				
 				mainCon.setUser(user);
 				Scene mainScene = new Scene(main);
+				
 				Stage stage = (Stage)btnLogin.getScene().getWindow();
+				
 				stage.setScene(mainScene);
 				
 			} catch(IOException e2) {
@@ -80,7 +94,7 @@ public class Login implements Initializable {
 			pop.initModality(Modality.WINDOW_MODAL);
 			pop.initOwner(mainStage);
 			  try {
-				  	FXMLLoader loader = new FXMLLoader();
+				   FXMLLoader loader = new FXMLLoader();
 		          
 		           loader.setLocation(getClass().getResource("../fxml/LoginFail.fxml"));
 		           Parent root = (Parent)loader.load();

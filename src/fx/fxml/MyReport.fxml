@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="myReportPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controller.MyReport">
+   <center>   
+      <TableView fx:id="tViewContent" prefHeight="563.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+        <columns>
+         <TableColumn fx:id="tColcnum" prefWidth="84.0" text="번호" />
+         <TableColumn fx:id="tColcName" prefWidth="204.0" text="사기꾼닉" />
+         <TableColumn fx:id="tColcTitle" prefWidth="603.0" text="제목" />
+        
+        </columns>
+      </TableView>
+   </center>
+ <!--   <right>
+      <TableView fx:id="tViewChk" prefHeight="700.0" prefWidth="79.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="tColChk" prefWidth="78.0" text="선택" />
+        </columns>
+      </TableView>
+   </right> -->
+</BorderPane>
