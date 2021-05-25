@@ -35,22 +35,20 @@ import javafx.stage.Stage;
 public class Main implements Initializable {
 
 	@FXML private TextField txtfieldSearch;
-	@FXML private Button btnSearch,btnGoLogin,btnGoMain;
+	@FXML private Button btnSearch,btnGoLogin,btnUpdate;
 	@FXML private BorderPane mainPane;
 	@FXML private Label lblUserId,lblChk,lblReportCnt;
 	private User user;
 	private UserDAO dao = new UserDAO();
 	private ReportDAO rDao = new ReportDAO();
 	private String userId;
-
-	
+ 
 	String nickName;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		txtfieldSearch.setOnKeyPressed(e->enterKeyEvent(e));
 		Platform.runLater(()->txtfieldSearch.focusedProperty());
 		btnGoLogin.setOnAction(e->goLoginAlert());
-		
 		Platform.runLater(()->setReportingNumHyperLink(userId));
 		//Platform.runLater(()->lblUserId.setText(userId));
 		Platform.runLater(()->lblChk.setText(nickName));
@@ -71,7 +69,26 @@ public class Main implements Initializable {
 			link.setTextFill(Color.RED);
 			link.setLayoutX(lblReportCnt.getLayoutX());
 			link.setLayoutY(lblReportCnt.getLayoutY()-3);
-		
+			link.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					try {
+						 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/MyReport.fxml"));
+						 Parent center =loader.load();
+						
+						MyReport reportCon = loader.getController();
+						System.out.println(userId);
+						reportCon.setUser(userId);
+						
+						mainPane.setCenter(center);
+						
+					} catch(IOException e2) {
+						e2.printStackTrace();
+					}
+					
+				}
+			});
 			AnchorPane an = (AnchorPane) mainPane.getTop();
 			an.getChildren().add(link);
 			

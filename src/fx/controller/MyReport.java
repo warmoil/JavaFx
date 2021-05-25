@@ -16,7 +16,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,90 +30,106 @@ public class MyReport implements Initializable {
 
 	@FXML private BorderPane myReportPane;
 	@FXML private TableView<MyReportData> tViewContent;
+	@FXML private Button btnDelete;
+	@FXML private Label lblChk;
+	@FXML private TableColumn<MyReportData , String> tColcName,tColcTitle;
+	@FXML private TableColumn<MyReportData, Integer> tColcnum;
+	//@FXML private TableColumn<MyReportData, Boolean> tColChk= new TableColumn<MyReportData,Boolean>("check"); 
+	@FXML private TableColumn<MyReportData, Boolean> tColChk;
 	private ReportDAO rDao = new ReportDAO();
 	private String userId;
     private Vector<Integer> checkedNum = new Vector<Integer>();
-	@FXML private TableColumn<MyReportData , String> tColcName,tColcTitle;
-	@FXML private TableColumn<MyReportData, Integer> tColcnum;
-	@FXML private TableColumn<CheckBox, Integer> tColChk;
+    private Vector<String> checkedName = new Vector<String>();
+    private String lblText = new String();
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		Platform.runLater(()->getDatas());
+
 	}
 
 	public void getDatas() {
 		
 		ObservableList<MyReportData> datas = FXCollections.observableArrayList();
-		MyReportData[] reports = rDao.getMyReportInfo("test");
+		MyReportData[] reports = rDao.getMyReportInfo(userId);
 		
 		if(reports != null) {
 			for(MyReportData my : reports) {
-				//MyReportData de = new MyReportData(my.getcId(),my.getTitle(),my.getNum(),false);
-				//datas.add(my);
-				//datas.add(de);
 				System.out.println(my.getcId());
 			}
-			datas.setAll(reports);
-			tViewContent.setItems(datas);
+		
 			
 			//여기는 테이블에 데이터 삽입하는곳 (테이블뷰가 보여주게 하는곳 칼럼 데이터 삽입)
 			tColcName.setCellValueFactory(new PropertyValueFactory<MyReportData, String>("cId"));
 			tColcnum.setCellValueFactory(new PropertyValueFactory<MyReportData, Integer>("num"));
-			tColcTitle.setCellValueFactory(new PropertyValueFactory<MyReportData, String>("title"));
-			TableColumn<MyReportData,Boolean> checkBox = new TableColumn<MyReportData,Boolean>("check");    
+			tColcTitle.setCellValueFactory(new PropertyValueFactory<MyReportData, String>("title")); 
 	        // 체크박스를 Cell에 표시
-	      checkBox.setCellValueFactory(new PropertyValueFactory<MyReportData,Boolean>("check"));
-	
-	      	checkBox.setCellFactory(column -> new TableCell<MyReportData, Boolean>(){
-		            public void updateItem(Boolean check, boolean empty) {
-		             super.updateItem(check, empty);
-		             if (check == null || empty) {
-		              setGraphic(null);
-		             } else {
-		              CheckBox box = new CheckBox();
-		              BooleanProperty checked = (BooleanProperty)column.getCellObservableValue(getIndex());
-		              
-		              MyReportData my = (MyReportData)column.getTableView().getItems().get(getIndex());
-		       
-		              if (checked.get()){
-		            	  if(!checkedNum.contains(my.getNum())) {
-		            		  checkedNum.add(my.getNum());
-		            	  }
-		            	  System.out.println(my.getNum()+"번");
-		            	  System.out.println(my.getcId()+" is Checked!");
-		            
-		              } else {
-		            	  if(checkedNum.contains(my.getNum())) {
-		            		  for(int i =0; i<checkedNum.size();i++) {
-			            		  if(checkedNum.get(i) == my.getNum()) {
-				            		  checkedNum.remove(i);
-				            	  }
+	      
+	      tColChk.setCellValueFactory(new PropertyValueFactory<MyReportData,Boolean>("check"));
+	      tColChk.setCellFactory(column -> new TableCell<MyReportData, Boolean>(){
+	            public void updateItem(Boolean check, boolean empty) {
+	             super.updateItem(check, empty);
+	             if (check == null || empty) {
+	              setGraphic(null);
+	             } else {
+	              CheckBox box = new CheckBox();
+	              BooleanProperty checked = (BooleanProperty)column.getCellObservableValue(getIndex());
+	              
+	              MyReportData my = (MyReportData)column.getTableView().getItems().get(getIndex());
+	       
+	              if (checked.get()){
+	            	  if(!checkedNum.contains(my.getNum())) {
+	            		  checkedNum.add(my.getNum());
+	            		  checkedName.add(my.getcId());
+	            		  lblText = "";
+	            		  for(int i=0; i < checkedName.size();i++) {
+	            			  lblText += checkedNum.get(i).toString()+"번 :"+checkedName.get(i)+"    ";
+	            		  }
+	            		  lblChk.setText(lblText);
+	            	  }
+	            	  
+	            	  
+	            
+	              } else {
+	            	  if(checkedNum.contains(my.getNum())) {
+	            		  for(int i =0; i<checkedNum.size();i++) {
+		            		  if(checkedNum.get(i) == my.getNum()) {
+			            		  checkedNum.remove(i);
+			            		  checkedName.remove(i);
+			            		  
 			            	  }
 		            	  }
-		            	
-		            	 
-		            	  System.out.println(my.getNum()+"번");
-		            	  System.out.println(my.getcId()+" is Unchecked!");
-		              }
-		              box.setSelected(checked.get());
-		              System.out.println(checkedNum.size()+"사이즈");
-		              for(Integer ch : checkedNum) {
-		            	  System.out.println(ch.intValue()+"번");
-		              }
-		              box.selectedProperty().bindBidirectional(checked);
-		             setGraphic(box);
-		             }
-		            }
-		           }
-             );
-           tViewContent.getColumns().add(checkBox);
-           
+	            		  lblText = "";
+	            		  for(int i=0; i < checkedName.size();i++) {
+	            			  lblText += checkedNum.get(i).toString()+"번 :"+checkedName.get(i)+"    ";
+	            		  }
+	            		  lblChk.setText(lblText);
+	            	  }
+	            	  System.out.println(my.getNum()+"번");
+	            	  System.out.println(my.getcId()+" is Unchecked!");
+	              }
+	              box.setSelected(checked.get());
+	              System.out.println(checkedNum.size()+"사이즈");
+	              for(Integer ch : checkedNum) {
+	            	  System.out.println(ch.intValue()+"번");
+	              }
+	              box.selectedProperty().bindBidirectional(checked);
+	             setGraphic(box);
+	             }
+	            }
+	           }
+       );
+	      	
+	      	     
            tViewContent.setEditable(true);
+          
+           datas.setAll(reports);
+		   tViewContent.setItems(datas);
     }
 
 }	
 	public void setUser(String userId) {
 		this.userId =  userId;
 	}
+	
 }

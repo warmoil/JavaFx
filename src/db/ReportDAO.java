@@ -15,7 +15,7 @@ public class ReportDAO {
 	
 	public ReportDAO() {
 		try {
-			String dbURL = "jdbc:mariadb://localhost:3306/theCheat";
+			String dbURL = "jdbc:mariadb://localhost:3307/theCheat";
 			String dbID = "root";
 			String dbPassword = "1234";
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -123,7 +123,25 @@ public class ReportDAO {
 		}
 		return 0;
 	}
-	
+	public int deleteReporting(int[] cNum) {
+		String sql = "delete from report where cId in(?)";
+		int[] nums = cNum;
+		String getNums = "";
+		if(nums.length > 1) {
+		for(int i=0; i <nums.length-1; i++) {
+			getNums += Integer.toString(nums[i])+",";
+			}
+		
+			getNums +=Integer.toString(nums[nums.length-1]);
+			System.out.println(getNums);
+		}else if(nums.length == 1) {
+			getNums += Integer.toString(nums[0]);
+		}
+		else {
+			return -1 ;
+		}
+		return 1;
+	}
 	public int doReporting(String crimId, String reporterId , String reason , String title) {
 		String sql =  "insert into report values(?, ?, ?, ?,?)";
 		try {
