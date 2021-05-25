@@ -5,24 +5,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class ReportDAO {
+public class ReportDAO extends DAOBase{
 
 
-	private Connection conn; 
+	private Connection conn =DAOBase.conn; 
 	private PreparedStatement pstmt ,pstmt2; 
 	private ResultSet rs,rs2; 
 	private CriminalDAO cDao = new CriminalDAO();
 	
 	public ReportDAO() {
-		try {
-			String dbURL = "jdbc:mariadb://localhost:3307/theCheat";
-			String dbID = "root";
-			String dbPassword = "1234";
-			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 	public String getContent(int index) {
 		String sql = "select content from report where  num = ?";
@@ -124,23 +116,36 @@ public class ReportDAO {
 		return 0;
 	}
 	public int deleteReporting(int[] cNum) {
-		String sql = "delete from report where cId in(?)";
+		String sql = "delete from report where num =?";
 		int[] nums = cNum;
-		String getNums = "";
-		if(nums.length > 1) {
-		for(int i=0; i <nums.length-1; i++) {
-			getNums += Integer.toString(nums[i])+",";
-			}
-		
-			getNums +=Integer.toString(nums[nums.length-1]);
-			System.out.println(getNums);
-		}else if(nums.length == 1) {
-			getNums += Integer.toString(nums[0]);
+		for(int i = 0 ; i<nums.length; i++) {
+			System.out.print(nums[i]+",");
 		}
-		else {
+		if(nums.length <=0) {
 			return -1 ;
 		}
-		return 1;
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			if(nums.length > 1) {
+			for(int i=0; i <nums.length; i++) {
+				pstmt.setInt(1, nums[i]);
+				pstmt.addBatch();
+				}
+			}else if(nums.length == 1) {
+				pstmt.setInt(1, nums[0]);
+				int  result = pstmt.executeUpdate();
+				return result;
+			}
+			pstmt.executeBatch();
+			conn.commit();
+			
+			return 1;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		
+	
 	}
 	public int doReporting(String crimId, String reporterId , String reason , String title) {
 		String sql =  "insert into report values(?, ?, ?, ?,?)";

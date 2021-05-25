@@ -35,14 +35,15 @@ import javafx.stage.Stage;
 public class Main implements Initializable {
 
 	@FXML private TextField txtfieldSearch;
-	@FXML private Button btnSearch,btnGoLogin,btnUpdate;
+	@FXML private Button btnSearch,btnGoLogin,btnRefesh,btnChangeUser;
 	@FXML private BorderPane mainPane;
-	@FXML private Label lblUserId,lblChk,lblReportCnt;
+	@FXML private Label lblUserId,lblChk;
+	@FXML private Label lblReportCnt;
 	private User user;
 	private UserDAO dao = new UserDAO();
-	private ReportDAO rDao = new ReportDAO();
+	private  ReportDAO rDao = new ReportDAO();
 	private String userId;
- 
+	
 	String nickName;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -55,6 +56,28 @@ public class Main implements Initializable {
 		mainPane.setOnKeyPressed(e->escKeyEvent(e));
 		btnSearch.setOnAction(e->searchingAction());
 		Platform.runLater(()->test(userId));
+		btnRefesh.setOnAction(e->refresh());
+		btnChangeUser.setOnAction(e->goChangeUser());
+	}
+	
+	public void goChangeUser() {
+		try {
+			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/ChangeUser.fxml"));
+			 Parent main =loader.load();
+				
+			ChangeUser changeCon = loader.getController();
+			
+			changeCon.setUser(userId);
+			Scene mainScene = new Scene(main);
+			
+			Stage stage = (Stage)btnChangeUser.getScene().getWindow();
+			
+			stage.setScene(mainScene);
+			
+		} catch(IOException e2) {
+			e2.printStackTrace();
+			System.out.println("로그인실패");
+		}
 	}
 	
 	public void setReportingNumHyperLink(String userId) {
@@ -73,20 +96,7 @@ public class Main implements Initializable {
 
 				@Override
 				public void handle(ActionEvent event) {
-					try {
-						 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/MyReport.fxml"));
-						 Parent center =loader.load();
-						
-						MyReport reportCon = loader.getController();
-						System.out.println(userId);
-						reportCon.setUser(userId);
-						
-						mainPane.setCenter(center);
-						
-					} catch(IOException e2) {
-						e2.printStackTrace();
-					}
-					
+					viewMyReport(userId);
 				}
 			});
 			AnchorPane an = (AnchorPane) mainPane.getTop();
@@ -97,7 +107,22 @@ public class Main implements Initializable {
 		}
 		
 	}
-
+	public void viewMyReport(String userId) {
+		try {
+			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/MyReport.fxml"));
+			 Parent center =loader.load();
+			
+			MyReport reportCon = loader.getController();
+			System.out.println(userId);
+			reportCon.setUser(userId);
+			
+			mainPane.setCenter(center);
+			
+		} catch(IOException e2) {
+			e2.printStackTrace();
+		}
+	
+}
 	public void test(String userId) {
 		System.out.println(userId);
 		user = dao.getUserInfo(userId);
@@ -167,6 +192,22 @@ public class Main implements Initializable {
 		
 	}
 	
+	public void refresh() {
+		try {
+			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+			 Parent main =loader.load();
+				
+			Main mainCon = loader.getController();
+			
+			mainCon.setUser(userId);
+			Scene mainScene = new Scene(main);
+			Stage stage = (Stage)btnRefesh.getScene().getWindow();
+			stage.setScene(mainScene);
+		} catch(IOException e2) {
+			e2.printStackTrace();
+			System.out.println("실패");
+		}
+	}
 	public void goLogin() {
 		try {
 			Parent main = FXMLLoader.load(getClass().getResource("../fxml/Login.fxml"));

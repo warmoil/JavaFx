@@ -7,22 +7,14 @@ import java.sql.ResultSet;
 
 
 
-public class UserDAO {
+public class UserDAO extends DAOBase{
 
-	private Connection conn; 
+	private Connection conn =DAOBase.conn; 
 	private PreparedStatement pstmt; 
 	private ResultSet rs; 
 	private User user = new User();
 	public UserDAO() {
-		try {
-			String dbURL = "jdbc:mariadb://localhost:3307/theCheat";
-			String dbID = "root";
-			String dbPassword = "1234";
-			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+	
 	}
 	
 	public int login(String userId, String userPw) {
@@ -43,6 +35,7 @@ public class UserDAO {
 		}
 		return -2; 
 	}
+	
 	public int join(User user) {
 		  String sql = "insert into user values(?, ?, ?, ?, ?)";
 		  try {
@@ -58,6 +51,7 @@ public class UserDAO {
 		  }
 		  return -1;
 		}
+	
 	public String getUserNickName(String userId) {
 		String sql = "select nickname from user where userId = ?";
 		
@@ -125,7 +119,26 @@ public class UserDAO {
 			return null;
 		}
 	}
-	
+	public boolean isUserUpdate(User user) {
+		String sql  = "update user set userPw = ? , nickname = ? , ask = ? , answer = ? where userId = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserPw());
+			pstmt.setString(2, user.getUserNickName());
+			pstmt.setString(3, user.getUserAsk());
+			pstmt.setString(4, user.getUserAnswer());
+			pstmt.setString(5, user.getUserId());
+			int rsNum = pstmt.executeUpdate();
+			if(rsNum ==1) {
+				return true;
+			}else {
+				return false;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public boolean isJoined(String  userId) {
 		String sql = "select userId from user where userId = ?";
 		try {

@@ -5,23 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class CriminalDAO {
-
-	private Connection conn; 
+public class CriminalDAO extends DAOBase{
+	private Connection conn =DAOBase.conn; 
 	private PreparedStatement pstmt; 
 	private ResultSet rs,rs2; 
 	
 	
 	public CriminalDAO() {
-		try {
-			String dbURL = "jdbc:mariadb://localhost:3307/theCheat";
-			String dbID = "root";
-			String dbPassword = "1234";
-			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	public int getCrimNum(String crimId) {

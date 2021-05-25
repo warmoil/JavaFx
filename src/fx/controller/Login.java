@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import alert.ESCAlert;
 import db.User;
 import db.UserDAO;
 import fx.StageStore;
@@ -39,6 +40,7 @@ public class Login implements Initializable {
 	@FXML PasswordField txtPw;
 	@FXML AnchorPane loginPane;
 	private Stage pop;
+	private ESCAlert alert = new ESCAlert();
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(()->txtId.requestFocus());//txtId에 포커스 주기 실행후에 로드가다되면 실행하라는 뜻 
@@ -59,13 +61,18 @@ public class Login implements Initializable {
 		loginPane.getChildren().add(link);
 	}
 	
-	
+
 	public void loginAction() {
 		User user = new User();
 		user.setUserId(txtId.getText().toString());
 		user.setUserPw(txtPw.getText().toString());
 		String id = user.getUserId();
 		String pw = user.getUserPw();
+		if(id.length() == 0) {
+			alert.basicAlertShow("아이디 안치셨네요 ", "아이디 입력하세요");
+		}else if(id.length()>=1 && pw.length() == 0) {
+			alert.basicAlertShow("비번을 안치셨네요", "비번 입력하세요 ");
+		}else {
 		UserDAO userDao = new UserDAO();
 		int isLog = userDao.login(id, pw);
 		System.out.println("아이디:"+id+"\n pw:"+pw);
@@ -85,36 +92,36 @@ public class Login implements Initializable {
 				
 			} catch(IOException e2) {
 				e2.printStackTrace();
-				System.out.println("시발");
+				System.out.println("로그인실패");
 			}
 		}else{
-			Stage mainStage = (Stage)btnLogin.getScene().getWindow(); //이거 
-			
-			pop = new Stage(StageStyle.DECORATED);
-			pop.initModality(Modality.WINDOW_MODAL);
-			pop.initOwner(mainStage);
-			  try {
-				   FXMLLoader loader = new FXMLLoader();
-		          
-		           loader.setLocation(getClass().getResource("../fxml/LoginFail.fxml"));
-		           Parent root = (Parent)loader.load();
-		           LoginFail loginFail = loader.getController();
-		           
-		           loginFail.failReason(isLog);
-		            // 씬에 추가
-		            Scene sc = new Scene(root);
-		            pop.setScene(sc);
-		            pop.setTitle("this is popUp이다 쩔지?");
-		            pop.setResizable(false); // 창 사이즈 조절 차단
-		             
-		            // 보여주기
-		            pop.show();
-		             
-		        } catch (IOException e2) {
-		            e2.printStackTrace();
-		        }
+				Stage mainStage = (Stage)btnLogin.getScene().getWindow(); //이거 
+				
+				pop = new Stage(StageStyle.DECORATED);
+				pop.initModality(Modality.WINDOW_MODAL);
+				pop.initOwner(mainStage);
+				  try {
+					   FXMLLoader loader = new FXMLLoader();
+			          
+			           loader.setLocation(getClass().getResource("../fxml/LoginFail.fxml"));
+			           Parent root = (Parent)loader.load();
+			           LoginFail loginFail = loader.getController();
+			           
+			           loginFail.failReason(isLog);
+			            // 씬에 추가
+			            Scene sc = new Scene(root);
+			            pop.setScene(sc);
+			            pop.setTitle("this is popUp이다 쩔지?");
+			            pop.setResizable(false); // 창 사이즈 조절 차단
+			             
+			            // 보여주기
+			            pop.show();
+			             
+			        } catch (IOException e2) {
+			            e2.printStackTrace();
+			        }
+			}
 		}
-
 	}
 	
 	public void enterKeyEvent(KeyEvent e) {

@@ -10,7 +10,7 @@ public class AppTest extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		StageStore.stage = stage;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/MyReport.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/ChangeUser.fxml"));
 		Parent root = loader.load();
 		
 		Scene scene = new Scene(root);
