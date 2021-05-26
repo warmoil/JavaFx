@@ -98,7 +98,7 @@ public class MyReport implements Initializable {
 					}
 				}
 				else {
-					alert.basicAlertShow("삭제실패", "실패했어요 ㅈㅅ ㅎ..");
+					alert.basicAlertShow("삭제실패", "실패!");
 				}
 			}
 		
@@ -117,6 +117,7 @@ public class MyReport implements Initializable {
 		
 		ObservableList<MyReportData> datas = FXCollections.observableArrayList();
 		MyReportData[] reports = rDao.getMyReportInfo(userId);
+		
 		
 		if(reports != null) {
 			for(MyReportData my : reports) {

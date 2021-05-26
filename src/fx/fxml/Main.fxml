@@ -3,11 +3,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controller.Main">
+<BorderPane fx:id="mainPane" stylesheets="@../../css/Gray.css" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="fx.controller.Main">
    <top>
       <AnchorPane prefHeight="148.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
@@ -19,7 +21,15 @@
                </font>
             </Label>
             <Button fx:id="btnGoLogin" layoutX="862.0" layoutY="52.0" mnemonicParsing="false" text="로그 아웃" />
-            <Button fx:id="btnRefesh" layoutX="104.0" layoutY="31.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="101.0" text="홈 아이콘임" />
+            <Button fx:id="btnRefesh" layoutX="141.0" layoutY="32.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="27.0" >
+            	<graphic>
+            		<ImageView fitHeight="48" fitWidth="64" pickOnBounds="true">
+            			<image>
+            				<Image url="@../../image/CocoCon.png" />
+            			</image>
+            		</ImageView>
+            	</graphic>
+            </Button>
             <Label fx:id="lblUserId" layoutX="610.0" layoutY="32.0" text="신고횟수" />
             <Label fx:id="lblChk" layoutX="455.0" layoutY="25.0" text="확인용" textFill="#c9218b">
                <font>

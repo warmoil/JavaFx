@@ -158,4 +158,61 @@ public class UserDAO extends DAOBase{
 		}
 		
 	}
+	
+	public UserData[] getAllUserData() {
+		String sql = "select * from user";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.last();
+			int getRowNum = rs.getRow();
+			if(getRowNum>0) {
+				rs.beforeFirst();
+				UserData[] datas = new UserData[getRowNum];
+				int i =0;
+				while(rs.next()) {
+					datas[i] = new UserData(rs.getString("userId"), rs.getString("userPw"), rs.getString("nickName"), rs.getString("ask"), rs.getString("answer") , false);
+					i++;
+				}
+				return datas;
+				
+			}
+			
+		}catch(Exception e) {
+			
+		}
+		return null;
+	}
+	public int deleteUser(String[] userId) {
+		String sql = "delete from user where userId =?";
+		String[] users = userId;
+		for(int i = 0 ; i<users.length; i++) {
+			System.out.print(users[i]+",");
+		}  //잘 작동하나? 
+		if(users.length <=0) {
+			return -1 ;
+		}
+		try {
+			pstmt = conn.prepareStatement(sql); 
+			if(users.length > 1) {
+			for(int i=0; i <users.length; i++) {
+				pstmt.setString(1, users[i]);
+				pstmt.addBatch();
+				}
+			}else if(users.length == 1) {
+				pstmt.setString(1, users[0]);
+				int  result = pstmt.executeUpdate();
+				return result;
+			}
+			pstmt.executeBatch();
+			conn.commit();
+			
+			return 1;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		
+	
+	}
 }

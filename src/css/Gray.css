@@ -1,0 +1,13 @@
+.root{
+	-fx-background-image: url("../image/background.jpg");
+	
+}
+
+.text-area{
+	-fx-control-inner-background: #9B9C9E;
+	-fx-text-fill:red;
+}
+
+BorderPane{
+	-fx-background-image: url("../image/background.jpg");
+}

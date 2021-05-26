@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="myReportPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controller.MyReport">
+<BorderPane fx:id="myReportPane"  prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controller.MyReport">
    <center>   
       <TableView fx:id="tViewContent" prefHeight="671.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
         <columns>

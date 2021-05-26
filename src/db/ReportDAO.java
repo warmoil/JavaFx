@@ -29,6 +29,32 @@ public class ReportDAO extends DAOBase{
 		}
 		return null;
 	}
+	
+	public ReportData[] getAllReportData() {
+		
+		String sql = "select * from report ";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.last();
+			int getRowNum = rs.getRow();
+			if(getRowNum>0) {
+				rs.beforeFirst();
+				ReportData[] datas = new ReportData[getRowNum];
+				int i=0;
+				while(rs.next()) {
+					datas[i] = new ReportData(rs.getString("reporter"),rs.getString("cId"), rs.getString("title"), rs.getInt("num"),rs.getString("reason"),false);
+					i++;
+				}
+				return datas;
+			}
+		}catch(Exception e) {
+			System.out.println("ReportData실패");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public MyReportData[] getMyReportInfo(String userId) {
 		String sql = "select * from report where reporter = ?";
 		try {
@@ -42,7 +68,7 @@ public class ReportDAO extends DAOBase{
 				MyReportData[] datas = new MyReportData[getRowNum];
 				int i=0;
 				while(rs.next()) {
-					datas[i] = new MyReportData(rs.getString("cId"), rs.getString("title"), rs.getInt("num"),false);
+					datas[i] = new MyReportData(rs.getString("cId"), rs.getString("title"), rs.getInt("num"),rs.getString("reason"),false);
 					i++;
 				}
 				return datas;
