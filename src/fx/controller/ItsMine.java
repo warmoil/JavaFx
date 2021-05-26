@@ -70,7 +70,12 @@ public class ItsMine implements Initializable {
 	}
 
 	public void doSearch() {
-		
+		if(rReport.isSelected()) {
+			String rSearch = txtSearch.getText().toString();
+			
+		}else {
+			
+		}
 	}
 
 	public void deleteAction() {
