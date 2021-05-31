@@ -1,0 +1,13 @@
+.root{
+	-fx-background-image: url("../image/background.jpg");
+	
+}
+
+.dastext-area{
+	-fx-control-inner-background: #9B9C9E;
+	-fx-text-fill:#B76E79;
+}
+
+BorderPane{
+	-fx-background-image: url("../image/background.jpg");
+}

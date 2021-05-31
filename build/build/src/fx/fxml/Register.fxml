@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="registerPane" stylesheets="@../../css/Gray.css" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controller.Register">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="212.0" layoutY="111.0" text="아이디" />
+            <Label layoutX="212.0" layoutY="145.0" text="비번" />
+            <Label layoutX="123.0" layoutY="276.0" text="질문ex)내가 좋아하는음식은?" />
+            <Label layoutX="212.0" layoutY="314.0" text="질문답" />
+            <TextField fx:id="txtId" layoutX="289.0" layoutY="107.0" />
+            <TextField fx:id="txtAsk" layoutX="289.0" layoutY="272.0" />
+            <TextField fx:id="txtAnswer" layoutX="289.0" layoutY="310.0" />
+            <Button fx:id="btnIdCheck" layoutX="478.0" layoutY="107.0" mnemonicParsing="false" text="중복확인" />
+            <Label fx:id="lblId" layoutX="613.0" layoutY="111.0" text="중복확인하세요" />
+            <Button fx:id="btnJoin" layoutX="458.0" layoutY="372.0" mnemonicParsing="false" text="가입" />
+            <Button fx:id="btnCancel" layoutX="522.0" layoutY="372.0" mnemonicParsing="false" prefWidth="40.0" text="취소" />
+            <Label layoutX="493.0" layoutY="153.0" text="비밀번호는 4자리이상" />
+            <Label layoutX="202.0" layoutY="181.0" text="비번확인" />
+            <Label layoutX="500.0" layoutY="189.0" text="확인" />
+            <Label layoutX="206.0" layoutY="235.0" text="닉네임" />
+            <TextField fx:id="txtNickName" layoutX="289.0" layoutY="231.0" />
+            <Label fx:id="lblPw" layoutX="648.0" layoutY="153.0" text="확인한다" />
+            <Label fx:id="lblPwCheck" layoutX="648.0" layoutY="189.0" text="확인한다" />
+            <PasswordField fx:id="txtPw" layoutX="289.0" layoutY="141.0" />
+            <PasswordField fx:id="txtPwCheck" layoutX="289.0" layoutY="178.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

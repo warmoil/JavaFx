@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import alert.ESCAlert;
 import db.User;
 import db.UserDAO;
+import fx.AppMainTheCheat;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -129,7 +130,9 @@ public class ChangeUser implements Initializable {
 	}
 	public void goMain(String userId) {
 		try {
-			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+			// FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+			 FXMLLoader loader = new FXMLLoader();
+			 loader.setLocation(AppMainTheCheat.class.getResource("fxml/Main.fxml"));
 			 Parent main =loader.load();
 				
 			Main mainCon = loader.getController();

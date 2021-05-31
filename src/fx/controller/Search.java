@@ -12,6 +12,7 @@ import db.Report;
 import db.ReportDAO;
 import db.User;
 import db.UserDAO;
+import fx.AppMainTheCheat;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -58,8 +59,10 @@ public class Search implements Initializable {
 	}
 	public void goReport() {
 		try {
-			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Enroll.fxml"));
-			 Parent reportPene =loader.load();
+			// FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Enroll.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AppMainTheCheat.class.getResource("fxml/Enroll.fxml")); 
+			Parent reportPene =loader.load();
 			
 			Enroll enrollCon = loader.getController();
 			enrollCon.setReporter(userId);

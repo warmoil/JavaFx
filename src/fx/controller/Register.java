@@ -5,8 +5,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import alert.ESCAlert;
 import db.User;
 import db.UserDAO;
+import fx.AppMainTheCheat;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -39,6 +41,7 @@ public class Register implements Initializable {
 	@FXML TextField txtId,txtAsk,txtAnswer,txtNickName;
 	@FXML PasswordField txtPw,txtPwCheck;
 	UserDAO userDao = new UserDAO();
+	private String chkId = "";
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -48,6 +51,7 @@ public class Register implements Initializable {
 		pwCheckAction(txtPw, lblPw);
 		comparePw(txtPw , txtPwCheck , lblPwCheck);
 		btnJoin.setOnAction(e->joinAction());
+		btnJoin.setDisable(true);
 	}
 	
 	public void joinAction() {
@@ -91,6 +95,19 @@ public class Register implements Initializable {
 		});
 	}
 	
+	public void checkId(TextField txtId , String id) {
+		txtId.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(!txtId.getText().toString().equals(id)) {
+					btnJoin.setDisable(true);
+				}
+				
+			}
+		});
+	}
+	
 	public void pwCheckAction(PasswordField pwField , Label lbl) {
 			pwField.textProperty().addListener(new ChangeListener<String>() {
 			
@@ -123,13 +140,22 @@ public class Register implements Initializable {
 	public void idCheckEvent() {
 		
 		String id = txtId.getText().toString();
-		System.out.println(txtId.getText().toString());
-		boolean able =  userDao.isJoined(id);
-		System.out.println(able);
-		if(able) {
-			lblId.setText(id+"는 중복입니다");
+		if(id.length()>=2) {
+			System.out.println(txtId.getText().toString());
+			boolean able =  userDao.isJoined(id);
+			System.out.println(able);
+			if(able) {
+				lblId.setText(id+"는 중복입니다");
+			}else {
+				lblId.setText(id+"사용가능");
+				chkId = txtId.getText().toString();
+				checkId(txtId ,chkId);
+				btnJoin.setDisable(false);
+				
+			}
 		}else {
-			lblId.setText(id+"사용가능");
+			ESCAlert al = new ESCAlert();
+			al.basicAlertShow("아이디는 2글자이상", "2글자 이상입력해주세요 ");
 		}
 	}
 	
@@ -144,7 +170,11 @@ public class Register implements Initializable {
 
 	public void cancelAction() {
 		try {
-			Parent main = FXMLLoader.load(getClass().getResource("../fxml/Login.fxml"));				
+			//Parent main = FXMLLoader.load(getClass().getResource("../fxml/Login.fxml"));				
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AppMainTheCheat.class.getResource("fxml/Login.fxml"));
+			Parent main = loader.load();
+			
 			Scene mainScene = new Scene(main);
 			Stage stage = (Stage)btnCancel.getScene().getWindow();
 			stage.setScene(mainScene);
@@ -195,7 +225,10 @@ public class Register implements Initializable {
 	}
 	public void goLogin() {
 		try {
-			Parent main = FXMLLoader.load(getClass().getResource("../fxml/Login.fxml"));
+			//Parent main = FXMLLoader.load(getClass().getResource("../fxml/Login.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AppMainTheCheat.class.getResource("fxml/Login.fxml"));
+			Parent main = loader.load();
 			Scene mainScene = new Scene(main);
 			Stage stage = (Stage)btnCancel.getScene().getWindow();
 			stage.setScene(mainScene);

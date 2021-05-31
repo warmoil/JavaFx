@@ -1,14 +1,18 @@
 package fx.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.jar.JarFile;
 
 import alert.ESCAlert;
 import db.User;
 import db.UserDAO;
+import fx.AppMainTheCheat;
 import fx.StageStore;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -28,6 +32,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,11 +53,9 @@ public class Login implements Initializable {
 		btnCancel.setOnAction(e->btnCancelAction(e));
 		btnLogin.setOnAction(e->btnLoginAction(e));
 		btnRegister.setOnAction(e->btnRegisteerAction(e));
-		txtPw.setOnKeyPressed(e->enterKeyEvent(e));
+		txtPw.setOnKeyPressed(e->enterKeyEvent(e));	
 		Platform.runLater(()->test());
-		
-		
-	
+
 	}
 	public void test() {
 		Hyperlink link = new Hyperlink("plz");
@@ -62,7 +65,7 @@ public class Login implements Initializable {
 	}
 	
 
-	public void loginAction() {
+	public void loginAction()  {
 		User user = new User();
 		user.setUserId(txtId.getText().toString());
 		user.setUserPw(txtPw.getText().toString());
@@ -78,9 +81,29 @@ public class Login implements Initializable {
 		System.out.println("아이디:"+id+"\n pw:"+pw);
 		if(isLog == 1) {
 			try {
-				 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
-				 Parent main =loader.load();
-					
+				/*
+				//Class.forName("fx.fxml.Main.fxml");
+				//URL fxmlPath = new File("src/fx/fxml/Main.fxml").toURL();
+				FXMLLoader loader = new FXMLLoader(Class.forName("fx.controller.Main").getResource("../fxml/Main.fxml"));
+				//System.out.println(rootPath);
+				//FXMLLoader loader = FXMLLoader.load(getClass().getResource("../fxml/Main.fxml"));
+				//FXMLLoader loader = new FXMLLoader(Class.forName("fx.controller.Main").getResource(rootPath+"../fxml/Main.fxml"));
+				
+				BorderPane main  = (BorderPane)loader.load();		
+				Main mainCon  = loader.getController();
+				mainCon.setUser(user);
+				Scene mainScene = new Scene(main);
+				
+				Stage stage = (Stage)btnLogin.getScene().getWindow();
+				
+				stage.setScene(mainScene);
+				*/
+				
+			
+				//FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(AppMainTheCheat.class.getResource("fxml/Main.fxml"));
+				Parent main =loader.load();
 				Main mainCon = loader.getController();
 				
 				mainCon.setUser(user);
@@ -103,7 +126,8 @@ public class Login implements Initializable {
 				  try {
 					   FXMLLoader loader = new FXMLLoader();
 			          
-			           loader.setLocation(getClass().getResource("../fxml/LoginFail.fxml"));
+			       //    loader.setLocation(getClass().getResource("../fxml/LoginFail.fxml"));
+					   loader.setLocation(AppMainTheCheat.class.getResource("fxml/LoginFail.fxml"));
 			           Parent root = (Parent)loader.load();
 			           LoginFail loginFail = loader.getController();
 			           
@@ -152,7 +176,7 @@ public class Login implements Initializable {
 			alert.close();
 		}
 	}
-	public void btnLoginAction(ActionEvent e) {
+	public void btnLoginAction(ActionEvent e)  {
 		loginAction();
 
 	}
@@ -165,7 +189,7 @@ public class Login implements Initializable {
 			
 		} catch(IOException e2) {
 			e2.printStackTrace();
-			System.out.println("시발");
+			System.out.println("회원가입 이동실패");
 		}
 	}
 	public void btnCancelAction(ActionEvent e) {

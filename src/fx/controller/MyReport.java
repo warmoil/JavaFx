@@ -10,6 +10,7 @@ import java.util.Vector;
 import alert.ESCAlert;
 import db.MyReportData;
 import db.ReportDAO;
+import fx.AppMainTheCheat;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -81,7 +82,9 @@ public class MyReport implements Initializable {
 					alert.basicAlertShow("삭제완료" , checkedNum.size()+"개를 삭제했습니다 ");
 					try {
 						//삭제 하고 새로고침인것처럼 보이기위해 				
-						 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+						 //FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+						 FXMLLoader loader = new FXMLLoader();
+						 loader.setLocation(AppMainTheCheat.class.getResource("fxml/Main.fxml"));
 						 Parent main =loader.load();
 							
 						Main mainCon = loader.getController();

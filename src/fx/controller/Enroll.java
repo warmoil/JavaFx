@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import db.ReportDAO;
 import db.User;
 import db.UserDAO;
+import fx.AppMainTheCheat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -102,8 +103,10 @@ public class Enroll implements Initializable {
 	
 	public void goMain() {
 		try {
-			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
-			 Parent main =loader.load();
+			 //FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AppMainTheCheat.class.getResource("fxml/Main.fxml")); 
+			Parent main =loader.load();
 				
 			Main mainCon = loader.getController();
 			

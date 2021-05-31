@@ -9,6 +9,7 @@ import alert.ESCAlert;
 import db.ReportDAO;
 import db.User;
 import db.UserDAO;
+import fx.AppMainTheCheat;
 import fx.StageStore;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -47,11 +48,11 @@ public class Main implements Initializable {
 	String nickName;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		//StageStore.stage.setResizable(true);
 		txtfieldSearch.setOnKeyPressed(e->enterKeyEvent(e));
 		Platform.runLater(()->txtfieldSearch.focusedProperty());
 		btnGoLogin.setOnAction(e->goLoginAlert());
 		Platform.runLater(()->setReportingNumHyperLink(userId));
-		//Platform.runLater(()->lblUserId.setText(userId));
 		Platform.runLater(()->lblChk.setText(nickName));
 		mainPane.setOnKeyPressed(e->escKeyEvent(e));
 		btnSearch.setOnAction(e->searchingAction());
@@ -62,7 +63,9 @@ public class Main implements Initializable {
 	
 	public void goChangeUser() {
 		try {
-			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/ChangeUser.fxml"));
+			 //FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/ChangeUser.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AppMainTheCheat.class.getResource("fxml/ChangeUser.fxml"));
 			 Parent main =loader.load();
 				
 			ChangeUser changeCon = loader.getController();
@@ -109,8 +112,10 @@ public class Main implements Initializable {
 	}
 	public void viewMyReport(String userId) {
 		try {
-			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/MyReport.fxml"));
-			 Parent center =loader.load();
+			 //FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/MyReport.fxml"));
+			FXMLLoader loader =new FXMLLoader();
+			loader.setLocation(AppMainTheCheat.class.getResource("fxml/MyReport.fxml"));
+			Parent center =loader.load();
 			
 			MyReport reportCon = loader.getController();
 			System.out.println(userId);
@@ -160,7 +165,9 @@ public class Main implements Initializable {
 	public void searchingAction() {
 		if(txtfieldSearch.getText().toString().length()>0) {
 		try {
-			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Search.fxml"));
+			// FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Search.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AppMainTheCheat.class.getResource("fxml/Search.fxml"));
 			 Parent center =loader.load();
 			
 			Search searchCon = loader.getController();
@@ -210,7 +217,10 @@ public class Main implements Initializable {
 	}
 	public void goLogin() {
 		try {
-			Parent main = FXMLLoader.load(getClass().getResource("../fxml/Login.fxml"));
+			//Parent main = FXMLLoader.load(getClass().getResource("../fxml/Login.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AppMainTheCheat.class.getResource("fxml/Login.fxml"));
+			Parent main = loader.load();
 			Scene mainScene = new Scene(main);
 			Stage stage = (Stage)btnGoLogin.getScene().getWindow();
 			stage.setScene(mainScene);

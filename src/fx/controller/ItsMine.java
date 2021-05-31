@@ -9,6 +9,7 @@ import alert.ESCAlert;
 import db.ReportData;
 import db.UserDAO;
 import db.UserData;
+import fx.AppTest;
 import db.ReportDAO;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -122,8 +123,10 @@ public class ItsMine implements Initializable {
 	
 	public void refresh(String type) {
 		try {
-			 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/ItsMine.fxml"));
-			 Parent main =loader.load();
+			 //FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/ItsMine.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AppTest.class.getResource("fxml/ItsMine.fxml"));
+			Parent main =loader.load();
 				
 			ItsMine mineCon = loader.getController();
 			
