@@ -135,7 +135,7 @@ public class Login implements Initializable {
 			            // 씬에 추가
 			            Scene sc = new Scene(root);
 			            pop.setScene(sc);
-			            pop.setTitle("this is popUp이다 쩔지?");
+			            pop.setTitle("직접만든 팝업창 ");
 			            pop.setResizable(false); // 창 사이즈 조절 차단
 			             
 			            // 보여주기
@@ -163,9 +163,9 @@ public class Login implements Initializable {
 	}
 	public void escAlertShow() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("간다고?");
-		alert.setHeaderText("진짜?");
-		alert.setContentText("님 나갈꺼?? 종료??");
+		alert.setTitle("프로그램이 종료됩니다");
+		alert.setHeaderText("확인을 누를시 종료합니다");
+		alert.setContentText("종료하시겠습니까?");
 	
 		Optional<ButtonType> result = alert.showAndWait();
 		

@@ -68,8 +68,8 @@ public class Enroll implements Initializable {
 	public void failAlertShow() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("글쓰기 실패");
-		alert.setHeaderText("실패했음");
-		alert.setContentText("유감.. ㅎ");
+		alert.setHeaderText("글쓰기에 실패하였습니다 ");
+		alert.setContentText(".");
 		alert.showAndWait();
 
 	}
@@ -117,7 +117,6 @@ public class Enroll implements Initializable {
 			
 		} catch(IOException e2) {
 			e2.printStackTrace();
-			System.out.println("시발");
 		}
 	}
 }

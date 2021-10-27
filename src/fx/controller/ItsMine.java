@@ -113,7 +113,7 @@ public class ItsMine implements Initializable {
 					al.basicAlertShow(reNum+"개의 개시물을 삭제했습니다", "삭제완료 ");
 					refresh("report");
 				}else {
-					al.basicAlertShow("삭제실패 ", "ㅈㅅ ㅎㅎ;;");
+					al.basicAlertShow("삭제실패 ", "삭제 실패하였습니다 ");
 				}
 			}
 		}else {

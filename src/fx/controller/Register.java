@@ -115,15 +115,15 @@ public class Register implements Initializable {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if(newValue.length() >0) {
 					if(pwCheckEvent(newValue)) {				
-						lbl.setText("4글자가 넘네요 가능");
+						lbl.setText("4글자가 넘네요 가능합니다");
 						lbl.setTextFill(Color.BLUE);
 						
 					}else {
-						lbl.setText("4글자가 안되잖아");
+						lbl.setText("4글자가 안됩니다");
 						lbl.setTextFill(Color.RED);
 					}
 				}else {
-					lbl.setText("확인한다했다");
+					lbl.setText("확인중");
 					lbl.setTextFill(Color.BLACK);
 				}
 			}
@@ -200,7 +200,7 @@ public class Register implements Initializable {
 	public void joinFailAlert() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("회원가입 실패 ");
-		alert.setHeaderText("실패함 ㅋ");
+		alert.setHeaderText("회원 가입 실패");
 	
 	
 		alert.showAndWait();
@@ -211,8 +211,8 @@ public class Register implements Initializable {
 	public void alertShow() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("경고!");
-		alert.setHeaderText("회원 가입 안하나요?");
-		alert.setContentText("님 회원 가입 안함? 진짜 안함?");
+		alert.setHeaderText("회원 가입을 취소합니다 ");
+		alert.setContentText("회원가입 입력했던 정보가 취소됩니다 ");
 	
 		Optional<ButtonType> result = alert.showAndWait();
 		
@@ -234,7 +234,7 @@ public class Register implements Initializable {
 			stage.setScene(mainScene);
 		}catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("로그인창 진입실패 아나 ");
+			System.out.println("로그인창 진입 실패 ");
 		}
 	}
 	

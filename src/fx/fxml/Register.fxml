@@ -27,8 +27,8 @@
             <Label layoutX="500.0" layoutY="189.0" text="확인" />
             <Label layoutX="206.0" layoutY="235.0" text="닉네임" />
             <TextField fx:id="txtNickName" layoutX="289.0" layoutY="231.0" />
-            <Label fx:id="lblPw" layoutX="648.0" layoutY="153.0" text="확인한다" />
-            <Label fx:id="lblPwCheck" layoutX="648.0" layoutY="189.0" text="확인한다" />
+            <Label fx:id="lblPw" layoutX="648.0" layoutY="153.0" text="리스너" />
+            <Label fx:id="lblPwCheck" layoutX="648.0" layoutY="189.0" text="리스너" />
             <PasswordField fx:id="txtPw" layoutX="289.0" layoutY="141.0" />
             <PasswordField fx:id="txtPwCheck" layoutX="289.0" layoutY="178.0" />
          </children>

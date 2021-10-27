@@ -72,7 +72,6 @@ public class Search implements Initializable {
 			
 		} catch(IOException e2) {
 			e2.printStackTrace();
-			System.out.println("시발");
 		}
 	}
 	

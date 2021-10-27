@@ -47,7 +47,7 @@ public class LoginFail implements Initializable {
 	
 	public void failReason(int reason) {
 		if(reason == 0) {
-			lblMsg.setText("비번이 틀렸다 아이디는 맞습니다 힘내세요!\n저한테 문의하면 싼가격에 비번을 팔겠습니다 ");
+			lblMsg.setText("비밀 번호가 틀렸습니다  ");
 		}else if(reason == -1){
 			lblMsg.setText("그런아이디 없습니다 .");
 		}

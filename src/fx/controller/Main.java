@@ -179,7 +179,6 @@ public class Main implements Initializable {
 			
 		} catch(IOException e2) {
 			e2.printStackTrace();
-			System.out.println("시발");
 		}
 	}
 	}
@@ -226,7 +225,7 @@ public class Main implements Initializable {
 			stage.setScene(mainScene);
 		}catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("로그인창 진입실패 아나 ");
+			System.out.println("로그인창 진입 실패 ");
 		}
 	}
 	

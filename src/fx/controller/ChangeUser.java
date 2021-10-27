@@ -47,7 +47,7 @@ public class ChangeUser implements Initializable {
 		KeyCode key = e.getCode();
 		if(key.equals(KeyCode.ESCAPE)) {
 			
-			if(alert.costomAlert(userId, "메인으로?", "갈까요?", "쓸거없음")) {
+			if(alert.costomAlert(userId, "메인으로?", "갈까요?", ".")) {
 				goMain(userId);
 			}
 		}
